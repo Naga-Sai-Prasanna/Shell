@@ -1,3 +1,4 @@
+#!/bin/bash
 userid=$(id -u)
 LOGS_FOLDER="/var/log/shell-script"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
