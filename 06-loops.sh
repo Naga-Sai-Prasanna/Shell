@@ -55,10 +55,10 @@ do
   dnf list installed $package -y &>>$LOGS_FILE
     if [ $? -ne 0 ]; then
     echo "$package not installed instaling now"
-    dnf install $package -y $>>$LOGS_FILE
+    dnf install $package -y &>>$LOGS_FILE
     VALIDATE $? "$package installation"
     else
-    echo "$package is already installed SKIPPING" &>>$LOGS_FILE | tee -a $LOGS_FILE
+    echo "$package is already installed SKIPPING" | tee -a $LOGS_FILE
     fi
 done 
 
