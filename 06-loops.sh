@@ -42,9 +42,9 @@ mkdir -p $LOGS_FOLDER
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-    echo "$2......failure". | tee -a $LOGS_FILE
+    echo "$2......failure" | tee -a $LOGS_FILE
     else
-    echo "$2.....success". | tee -a $LOGS_FILE
+    echo "$2.....success" | tee -a $LOGS_FILE
     fi
 }
 
@@ -58,7 +58,7 @@ do
     dnf install $package -y $>>$LOGS_FILE
     VALIDATE $? "$package installation"
     else
-    echo "$package is already installed SKIPPING" $>>$LOGS_FILE | teaa -a $LOGS_FILE
+    echo "$package is already installed SKIPPING" &>>$LOGS_FILE | tea -a $LOGS_FILE
     fi
 done 
 
