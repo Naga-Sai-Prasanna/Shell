@@ -1,5 +1,8 @@
 #!/bin/bash
+
 set -e
+
+#!/bin/bash
 
 userid=$(id -u)
 LOGS_FOLDER="/var/log/shell-script"
@@ -32,7 +35,7 @@ do
     if [ $? -ne 0 ]; then
     echo "$package not installed instaling now"
     dnf install $package -y &>>$LOGS_FILE
-    VALIDATE $? "$package installation"
+    #VALIDATE $? "$package installation"
     else
     echo -e "$package is already installed $Y SKIPPING $N" | tee -a $LOGS_FILE
     fi
