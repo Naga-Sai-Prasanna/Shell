@@ -9,7 +9,7 @@ Y="\e[33m"
 N="\e[0m"
 
  if [ $userid -ne 0 ]; then
-   echo "$R please run this script with root access $N" | tee -a $LOGS_FILE
+   echo -e "$R please run this script with root access $N" | tee -a $LOGS_FILE
    exit 1
 fi
 
@@ -17,9 +17,9 @@ mkdir -p $LOGS_FOLDER
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-    echo "$2......$R failure $N" | tee -a $LOGS_FILE
+    echo -e "$2......$R failure $N" | tee -a $LOGS_FILE
     else
-    echo "$2.....$G success $N" | tee -a $LOGS_FILE
+    echo -e "$2.....$G success $N" | tee -a $LOGS_FILE
     fi
 }
 
@@ -33,6 +33,6 @@ do
     dnf install $package -y &>>$LOGS_FILE
     VALIDATE $? "$package installation"
     else
-    echo "$package is already installed $Y SKIPPING $N" | tee -a $LOGS_FILE
+    echo -e "$package is already installed $Y SKIPPING $N" | tee -a $LOGS_FILE
     fi
 done 
