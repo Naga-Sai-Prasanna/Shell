@@ -1,14 +1,14 @@
-#!/bin/bash
-# userid=$(id -u)
-# if [ $userid -ne 0 ]; then
-#   echo "please run this script as root user"
+!/bin/bash
+userid=$(id -u)
+if [ $userid -ne 0 ]; then
+  echo "please run this script as root user"
   
-# fi
+fi
 
 
 #adding exit code
 
-#!/bin/bash
+
 userid=$(id -u)
 if [ $userid -ne 0 ]; then
   echo "please run this script as root user"
