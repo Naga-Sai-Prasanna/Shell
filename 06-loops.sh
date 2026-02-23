@@ -58,7 +58,7 @@ do
     dnf install $package -y
     VALIDATE $? "$package installation"
     else
-    echo "$package is already installed SKIPPING"
+    echo "$package is already installed SKIPPING" $>>$LOGS_FILE
     fi
 done 
 
