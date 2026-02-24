@@ -49,7 +49,7 @@
 # dnf remove nginx -y
 
 userid=$(id -u)
-mkdir -p $LOGS_FOLDER
+mkdir -p LOGS_FOLDER
 LOGS_FOLDER="/var/log/shell-script"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 
