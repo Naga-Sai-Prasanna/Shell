@@ -7,7 +7,7 @@ DOMAIN_NAME="prasanna.fun"
 
 for INSTANCE in $@
 do 
-    INSTANCE_ID=$(aws ec2 run-instances \
+    INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type "t3.micro" \
     --security-group-ids $SG_ID \
@@ -28,31 +28,31 @@ else
     IP=$(
     aws ec2 describe-instances \
     --instance-ids $INSTANCE_ID \
-    --query 'reservations[].instances[].PublicIPAddress' \
+    --query 'Reservations[].instances[].PrivateIPAddress' \
     --output text
     )
      
     RECORD_NAME="$INSTANCE.$DOMAIN_NAME"
 fi
-    echo "IPAddress:$IP"
+    echo "IP Address: $IP"
 
  aws route53 change-resource-record-sets \
   --hosted-zone-id $ZONE_ID \
-  --change-batch'
+  --change-batch '
   {
-      "comment":"updating record",
-      "changes":[
+      "comment": "updating record",
+      "changes": [
     {
 
-    "Action"="UPSERT"
+    "Action"= "UPSERT",
     "ResourceRecordSet": {
 
-    "Name": "'$RECORD_NAME'",
-    "Type": "A",
-    "TTL": 1,
-    "ResourceRecords": [
+        "Name": "'$RECORD_NAME'",
+        "Type": "A",
+        "TTL": 1,
+        "ResourceRecords": [
     {
-      "Value":"'$IP'"
+        "Value": "'$IP'"
        }
        ]
       }
@@ -60,4 +60,4 @@ fi
   }  
   '
   echo "Record updated for $INSTANCE"
-    done
+done
