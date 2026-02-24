@@ -9,21 +9,21 @@ for INSTANCE in $@
 do 
 INSTANCE_ID=$(aws ec2 run-instances \
 --image-id $AMI_ID \
---instance-type "t3-micro" \
+--instance-type "t3.micro" \
 --security-group-ids $SG_ID \
---tag-specifications "ResourceType=INSTANCE, Tags=[{key=Name,Value=$INSTANCE}]" \
---query 'INSTANCE[0].instance.id' \
---output.text )
+--tag-specifications "ResourceType=instance, Tags=[{Key=Name,Value=$INSTANCE}]" \
+--query 'Instances[0].InstanceId' \
+--output text )
 
 if [ $INSTANCE == "frontend" ]; then
   IP=$(
     aws ec2 describe-instances \
     --instance-ids $INSTANCE_ID \
-    --query 'reservations[].instances[].PublicIPAddress' \
+    --query 'Reservations[0].Instances[0].PublicIPAddress' \
     --output text
   )
 
-  RECORD_NAME="DOMAIN_NAME"
+  RECORD_NAME="$DOMAIN_NAME"
 else
     IP=$(
     aws ec2 describe-instances \
@@ -31,30 +31,31 @@ else
     --query 'reservations[].instances[].PublicIPAddress' \
     --output text)
      
-    RECORD_NAME="$INSTANCE.DOMAIN_NAME"
+    RECORD_NAME="$INSTANCE.$DOMAIN_NAME"
 fi
     echo "IPAddress:$IP"
 
  aws route53 change-resource-record-sets \
-  --hosted-zone-id $ZONE_ID 
-  --change batch'
+  --hosted-zone-id $ZONE_ID \
+  --change-batch'
   {
-    "comment:"updating record",
+    "comment":"updating record",
     "changes":[
     {
 
-    "Action="UPSERT"
+    "Action"="UPSERT"
     "ResourceRecordSet": {
 
     "Name": "'$RECORD_NAME'",
     "Type": "A"
-    "TTL": 1
-    "ResourceRecords":[{
-    "Value":"'$IP'"}
-            ]
-        }
-    }
-    ]
-    }  
-    echo "record updated for $INSTANCE"
+    "TTL": 1,
+    "ResourceRecords": [
+    {
+      "Value":"'$IP'"
+       }]
+      }
+    }]
+  }  
+  '
+  echo "Record updated for $INSTANCE"
     done
