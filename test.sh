@@ -55,7 +55,7 @@ LOGS_FOLDER="/var/log/w-script"
 
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 
-mkdir -p $LOGS_FOLDER
+#mkdir -p $LOGS_FOLDER
 
  if [ $userid -ne 0 ]; then
    echo "please run this script with root access" | tee -a $LOGS_FILE
@@ -64,16 +64,18 @@ mkdir -p $LOGS_FOLDER
   
 fi
 
-# VALIDATE(){
-#     if [ $1 -ne 0 ]; then
-#     echo "$2......failure". | tee -a $LOGS_FILE
-#     else
-#     echo "$2.....success". | tee -a $LOGS_FILE
-#     fi
-# }
+mkdir -p $LOGS_FOLDER
 
-# dnf install nginx -y &>>$LOGS_FILE | tee -a $LOGS_FILE
-# VALIDATE $? "installing nginx"  | tee -a $LOGS_FILE
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+    echo "$2......failure". | tee -a $LOGS_FILE
+    else
+    echo "$2.....success". | tee -a $LOGS_FILE
+    fi
+}
 
-# dnf remove nginx -y &>>$LOGS_FILE | tee -a $LOGS_FILE
-# VALIDATE $? "removing nginx" | tee -a $LOGS_FILE
+dnf install nginx -y &>>$LOGS_FILE | tee -a $LOGS_FILE
+VALIDATE $? "installing nginx"  | tee -a $LOGS_FILE
+
+dnf remove nginx -y &>>$LOGS_FILE | tee -a $LOGS_FILE
+VALIDATE $? "removing nginx" | tee -a $LOGS_FILE
