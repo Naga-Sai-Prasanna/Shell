@@ -39,11 +39,12 @@ fi
   --hosted-zone-id $ZONE_ID 
   --change batch'
   {
-    "comment:"updating record"
-    "changes":[{
+    "comment:"updating record",
+    "changes":[
+    {
 
     "Action="UPSERT"
-    "ResourceRecordSet":{
+    "ResourceRecordSet": {
 
     "Name": "'$RECORD_NAME'",
     "Type": "A"
@@ -53,7 +54,7 @@ fi
             ]
         }
     }
-    ]  
-     
+    ]
+    }  
     echo "record updated for $INSTANCE"
     done
