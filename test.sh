@@ -50,7 +50,7 @@
 
 userid=$(id -u)
 
-LOGS_FOLDER="/var/log/shell-script"
+LOGS_FOLDER="/var/log/new-script"
 
 
 LOGS_FILE="$LOGS_FOLDER/$0.log"
@@ -59,6 +59,8 @@ LOGS_FILE="$LOGS_FOLDER/$0.log"
 
  if [ $userid -ne 0 ]; then
    echo "please run this script with root access" | tee -a $LOGS_FILE
+ else
+   echo "running with root user" | tee -a $LOGS_FILE
   
 fi
 
