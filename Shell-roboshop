@@ -6,17 +6,16 @@ ZONE_ID="Z08746742X3NL30KWK535"
 DOMAIN_NAME="prasanna.fun"
 
 for instance in $@
-do 
+  do 
     INSTANCE_ID=$( aws ec2 run-instances \
-    --image-ID $AMI_ID \
-    --Instance-type "t3.micro" \
+    --image-id $AMI_ID \
+    --instance-type "t3.micro" \
     --security-group-ids $SG_ID \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query 'Instances[0].InstanceId' \
     --output text 
     )
-
-    if [ $instance == "frontend" ]; then
+      if [ $instance == "frontend" ]; then
        IP=$(
         aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
@@ -32,18 +31,18 @@ do
         --output text
     ) 
        RECORD_NAME="$instance.$DOMAIN_NAME"
-   fi
+      fi
 
     echo "IP Address:$IP"
 
     aws route53 change-resource-record-sets \
         --hosted-zone-id $ZONE_ID \
         --change-batch '{
-      "comment": "Updating record",
-      "changes": [{
+        "Comment": "Updating record",
+        "Changes": [{
 
-      "Action": "UPSERT",
-      "ResourceRecordSet": {
+        "Action": "UPSERT",
+        "ResourceRecordSet": {
 
         "Name": "'$RECORD_NAME'",
         "Type": "A",
@@ -55,5 +54,5 @@ do
       }
     }]
   }'
-  echo "Record updated for $INSTANCE"
+  echo "Record updated for $instance"
 done
