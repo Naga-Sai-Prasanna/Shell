@@ -27,7 +27,7 @@ do
         IP=$(
         aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
-        --query 'Reservations[].Instances[].PrivateIpAddress' \
+        --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text
     ) 
     RECORD_NAME="$INSTANCE.$DOMAIN_NAME"
@@ -36,27 +36,23 @@ do
     echo "IP Address: $IP"
 
     aws route53 change-resource-record-sets \
-  --hosted-zone-id $ZONE_ID \
-  --change-batch '
-  {
+        --hosted-zone-id $ZONE_ID \
+        --change-batch '{
       "comment": "Updating record",
-      "changes": [
-    {
+      "changes": [{
 
-    "Action": "UPSERT",
-    "ResourceRecordSet": {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
 
-        "Name": "'$RECORD_NAME'",
+        "Name": "'"$RECORD_NAME"'",
         "Type": "A",
         "TTL": 1,
-        "ResourceRecords": [
-    {
-        "Value": "'$IP'"
+        "ResourceRecords": [{
+          "Value": "'"$IP"'"
        }
        ]
       }
     }]
-  }  
-  '
+  } '
   echo "Record updated for $INSTANCE"
 done
