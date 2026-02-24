@@ -50,7 +50,7 @@
 
 userid=$(id -u)
 
-LOGS_FOLDER="/var/log/nw-script"
+LOGS_FOLDER="/var/log/w-script"
 
 
 LOGS_FILE="$LOGS_FOLDER/$0.log"
@@ -60,7 +60,7 @@ mkdir -p $LOGS_FOLDER
  if [ $userid -ne 0 ]; then
    echo "please run this script with root access" | tee -a $LOGS_FILE
  else
-   echo "running with root user" | &>>$LOGS_FILE
+   echo "running with root user"  &>>$LOGS_FILE
   
 fi
 
