@@ -50,7 +50,7 @@
 
 userid=$(id -u)
 
-LOGS_FOLDER="/var/log/w-script"
+LOGS_FOLDER="/var/log/t-script"
 
 
 LOGS_FILE="$LOGS_FOLDER/$0.log"
