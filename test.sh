@@ -49,8 +49,10 @@
 # dnf remove nginx -y
 
 userid=$(id -u)
-mkdir -p LOGS_FOLDER
+
 LOGS_FOLDER="/var/log/shell-script"
+
+mkdir -p $LOGS_FOLDER
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 
 
@@ -59,7 +61,6 @@ LOGS_FILE="$LOGS_FOLDER/$0.log"
    echo "please run this script with root access" | tee -a $LOGS_FILE
    exit 1
 fi
-
 
 
 VALIDATE(){
