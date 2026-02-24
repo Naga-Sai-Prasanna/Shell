@@ -55,12 +55,14 @@ LOGS_FOLDER="/var/log/shell-script"
 
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 
-# mkdir -p $LOGS_FOLDER
+
 
  if [ $userid -ne 0 ]; then
    echo "please run this script with root access" | tee -a $LOGS_FILE
    exit 1
 fi
+
+mkdir -p $LOGS_FOLDER
 
 
 # VALIDATE(){
